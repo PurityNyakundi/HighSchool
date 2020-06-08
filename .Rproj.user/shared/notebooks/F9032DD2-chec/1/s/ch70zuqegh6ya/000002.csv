@@ -1,0 +1,128 @@
+"0","library(GGally)"
+"2","package ‘GGally’ was built under R version 3.6.3"
+"2","Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2
+"
+"2","
+Attaching package: ‘GGally’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    nasa
+
+"
+"0","colnames(d3)"
+"1"," [1]"
+"1"," ""school""    "
+"1"," ""sex""       "
+"1"," ""age""       "
+"1"," ""address""   "
+"1","
+"
+"1"," [5]"
+"1"," ""famsize""   "
+"1"," ""pstatus""   "
+"1"," ""medu""      "
+"1"," ""fedu""      "
+"1","
+"
+"1"," [9]"
+"1"," ""mjob""      "
+"1"," ""fjob""      "
+"1"," ""reason""    "
+"1"," ""nursery""   "
+"1","
+"
+"1","[13]"
+"1"," ""internet""  "
+"1"," ""traveltime"""
+"1"," ""studytime"" "
+"1"," ""failures""  "
+"1","
+"
+"1","[17]"
+"1"," ""schoolsup"" "
+"1"," ""famsup""    "
+"1"," ""paid""      "
+"1"," ""activities"""
+"1","
+"
+"1","[21]"
+"1"," ""higher""    "
+"1"," ""romantic""  "
+"1"," ""famrel""    "
+"1"," ""freetime""  "
+"1","
+"
+"1","[25]"
+"1"," ""goout""     "
+"1"," ""dalc""      "
+"1"," ""walc""      "
+"1"," ""health""    "
+"1","
+"
+"1","[29]"
+"1"," ""absences""  "
+"1"," ""g1""        "
+"1"," ""g2""        "
+"1"," ""g3""        "
+"1","
+"
+"0","numeral<-d3%>%"
+"0","  select_if(is.factor)"
+"0","glimpse(numeral)"
+"1","Observations: 382
+"
+"1","Variables: 16
+"
+"1","$ school     [3m[38;5;246m<fct>[39m[23m GP, GP, GP, GP, GP, GP, GP, GP, GP,...
+"
+"1",""
+"1","$ sex        [3m[38;5;246m<fct>[39m[23m F, F, F, F, F, F, F, F, F, F, F, F,...
+"
+"1",""
+"1","$ address    [3m[38;5;246m<fct>[39m[23m R, R, R, R, R, R, R, R, R, U, U, U,...
+"
+"1",""
+"1","$ famsize    [3m[38;5;246m<fct>[39m[23m GT3, GT3, GT3, GT3, GT3, GT3, GT3, ...
+"
+"1",""
+"1","$ pstatus    [3m[38;5;246m<fct>[39m[23m T, T, T, T, T, T, T, T, T, A, A, T,...
+"
+"1",""
+"1","$ mjob       [3m[38;5;246m<fct>[39m[23m at_home, other, at_home, services, ...
+"
+"1",""
+"1","$ fjob       [3m[38;5;246m<fct>[39m[23m other, other, other, health, servic...
+"
+"1",""
+"1","$ reason     [3m[38;5;246m<fct>[39m[23m home, reputation, reputation, cours...
+"
+"1",""
+"1","$ nursery    [3m[38;5;246m<fct>[39m[23m yes, no, yes, yes, yes, yes, yes, y...
+"
+"1",""
+"1","$ internet   [3m[38;5;246m<fct>[39m[23m yes, yes, no, yes, yes, yes, yes, y...
+"
+"1",""
+"1","$ schoolsup  [3m[38;5;246m<fct>[39m[23m yes, yes, yes, yes, no, yes, no, ye...
+"
+"1",""
+"1","$ famsup     [3m[38;5;246m<fct>[39m[23m yes, yes, yes, yes, yes, yes, yes, ...
+"
+"1",""
+"1","$ paid       [3m[38;5;246m<fct>[39m[23m yes, no, yes, yes, yes, yes, no, ye...
+"
+"1",""
+"1","$ activities [3m[38;5;246m<fct>[39m[23m yes, no, yes, yes, yes, yes, no, no...
+"
+"1",""
+"1","$ higher     [3m[38;5;246m<fct>[39m[23m yes, yes, yes, yes, yes, yes, yes, ...
+"
+"1",""
+"1","$ romantic   [3m[38;5;246m<fct>[39m[23m no, yes, no, no, yes, no, yes, no, ...
+"
+"0","  #cor()%>%"
+"0","  #corrplot::corrplot()"

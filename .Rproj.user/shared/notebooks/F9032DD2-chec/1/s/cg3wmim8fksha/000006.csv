@@ -1,0 +1,7 @@
+"0","d4=merge(d1,d2,by=c(""school"",""sex"",""age"",""address"",""famsize"",""Pstatus"",""Medu"",""Fedu"",""Mjob"",""Fjob"",""reason"",""nursery"",""internet""))"
+"0","#d4[!duplicated(d4$guardian.x,d4)]"
+"0","print(nrow(d4))"
+"1","[1]"
+"1"," 382"
+"1","
+"

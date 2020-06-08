@@ -1,0 +1,9 @@
+"0","library(caret)"
+"0","library(gbm)"
+"2","package ‘gbm’ was built under R version 3.6.3"
+"2","Loaded gbm 2.1.5
+"
+"0","# load data"
+"0","d3_t<-preProcess(training,method = ""YeoJohnson"")"
+"0","training<-as.data.frame(predict(d3_t,newdata = training))"
+"0","head(training)"

@@ -1,0 +1,26 @@
+"0","library(caret)"
+"2","package ‘caret’ was built under R version 3.6.3"
+"2","Loading required package: lattice
+"
+"2","package ‘lattice’ was built under R version 3.6.3"
+"2","
+Attaching package: ‘caret’
+
+"
+"2","The following object is masked from ‘package:purrr’:
+
+    lift
+
+"
+"0","set.seed(107)"
+"0","inTrain <- createDataPartition("
+"0","  y = d3$g3,"
+"0","  ## the outcome data are needed"
+"0","  p = .75,"
+"0","  ## The percentage of data in the"
+"0","  ## training set"
+"0","  list = FALSE"
+"0",")"
+"0","training <- d3[ inTrain,]"
+"0","testing  <- d3[-inTrain,]"
+"0",""

@@ -1,0 +1,7 @@
+"0",""
+"0","for(i in 1:16) {"
+"0","counts <- table(numeral[,i])"
+"0","name <- names(numeral)[i]"
+"0","barplot(counts, main=name,col = ""red"")"
+"0",""
+"0","}"

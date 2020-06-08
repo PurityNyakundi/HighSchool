@@ -1,0 +1,3 @@
+"0","for(i in 1:16) {"
+"0","hist(numeral_n[,i], main=names(numeral_n)[i],xlab =names(numeral_n)[i],col = ""powder blue"" )"
+"0","}"

@@ -1,0 +1,6 @@
+"0","options(repr.plot.width = 4, repr.plot.height = 4)"
+"0","ggplot(d3,aes(x=g3,y =failures))+"
+"0","  geom_col(fill = ""blue"")+"
+"0","  facet_wrap(~higher)+"
+"0","  theme_classic()"
+"0",""

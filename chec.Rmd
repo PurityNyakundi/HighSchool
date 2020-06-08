@@ -1,0 +1,374 @@
+---
+title: "Student_Perfomance"
+author: "Purity"
+date: "29/05/2020"
+output: github_document
+    
+---
+**Given below are attributes**
+
+*Attributes for both student-mat.csv (Math course) and student-por.csv (Portuguese language course) datasets:*
+
+1 school - student's school (binary: 'GP' - Gabriel Pereira or 'MS' - Mousinho da Silveira)
+
+2 sex - student's sex (binary: 'F' - female or 'M' - male)
+
+3.age - student's age (numeric: from 15 to 22)
+
+4.address - student's home address type (binary: 'U' - urban or 'R' - rural)
+
+5.famsize - family size (binary: 'LE3' - less or equal to 3 or 'GT3' - greater than 3)
+
+6.Pstatus - parent's cohabitation status (binary: 'T' - living together or 'A' - apart)
+
+7.Medu - mother's education (numeric: 0 - none, 1 - primary education (4th grade), 2 – 5th to 9th grade, 3 – secondary education or 4 – higher education)
+
+8.Fedu - father's education (numeric: 0 - none, 1 - primary education (4th grade), 2 – 5th to 9th grade, 3 – secondary education or 4 – higher education)
+
+9.Mjob - mother's job (nominal: 'teacher', 'health' care related, civil 'services' (e.g. administrative or police), 'at_home' or 'other')
+
+10.Fjob - father's job (nominal: 'teacher', 'health' care related, civil 'services' (e.g. administrative or police), 'at_home' or 'other')
+
+11.reason - reason to choose this school (nominal: close to 'home', school 'reputation', 'course' preference or 'other')
+
+12.guardian - student's guardian (nominal: 'mother', 'father' or 'other')
+
+13.traveltime - home to school travel time (numeric: 1 - 1 hour)
+
+14.studytime - weekly study time (numeric: 1 - 10 hours)
+
+15.failures - number of past class failures (numeric: n if 1<=n<3, else 4)
+
+16.schoolsup - extra educational support (binary: yes or no)
+
+17.famsup - family educational support (binary: yes or no)
+
+18.paid - extra paid classes within the course subject (Math or Portuguese) (binary: yes or no)
+
+19.activities - extra-curricular activities (binary: yes or no)
+
+20.nursery - attended nursery school (binary: yes or no)
+
+21.higher - wants to take higher education (binary: yes or no)
+
+22.internet - Internet access at home (binary: yes or no)
+
+23.romantic - with a romantic relationship (binary: yes or no)
+
+24.famrel - quality of family relationships (numeric: from 1 - very bad to 5 - excellent)
+
+25.freetime - free time after school (numeric: from 1 - very low to 5 - very high)
+
+26.goout - going out with friends (numeric: from 1 - very low to 5 - very high)
+
+27.Dalc - workday alcohol consumption (numeric: from 1 - very low to 5 - very high)
+
+28.Walc - weekend alcohol consumption (numeric: from 1 - very low to 5 - very high)
+
+29.health - current health status (numeric: from 1 - very bad to 5 - very good)
+
+30.absences - number of school absences (numeric: from 0 to 93)
+These grades are related with the course subject, Math or Portuguese:
+1.G1 - first period grade (numeric: from 0 to 20)
+
+2.G2 - second period grade (numeric: from 0 to 20)
+
+3.G3 - final grade (numeric: from 0 to 20, output target)
+
+Additional note: there are several (382) students that belong to both datasets .
+
+These students can be identified by searching for identical attributes
+
+that characterize each student, as shown in the annexed R file.
+Source Information
+
+P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
+Fabio Pagnotta, Hossain Mohammad Amran.
+Email:fabio.pagnotta@studenti.unicam.it, mohammadamra.hossain '@' studenti.unicam.it
+University Of Camerino
+
+<https://archive.ics.uci.edu/ml/datasets/STUDENT+ALCOHOL+CONSUMPTION>
+
+
+# ***Business Understanding***
+A Non Governmental Organization has collected data from students doing math and portugese course in high school.They would like to gain insights from the social,gender and study information about them.
+They would also like you to predict the student final results.
+
+* Solution
+
+Do EDA and get as many insights as possible.Use the suitable supervised machine learning algorithm to predict what is needed.
+
+# ***Data Understanding***
+Here we load the datasets needed.Know about it all by checking distributions/skewness,shape and skewness.
+```{r}
+#load the data sets and libraries
+library(tidyverse)##Is a set of packages that include dplyr,tidyr etc
+d1=read.csv("student-mat.csv",header=TRUE)
+d2=read.csv("student-por.csv",header=TRUE)
+head(d2)
+d4=merge(d1,d2,by=c("school","sex","age","address","famsize","Pstatus","Medu","Fedu","Mjob","Fjob","reason","nursery","internet"))
+#d4[!duplicated(d4$guardian.x,d4)]
+print(nrow(d4))
+
+
+```
+AS seen above the two are merged to give a common dataset with 382 rows
+```{r}
+d3<-read.csv("d3.csv")
+view(d3)
+```
+
+
+## *Check The Shape*
+```{r}
+dim(d3)
+anyDuplicated(colnames(d3))
+
+```
+## *Check the structure*
+```{r}
+#I normally use glimpse 
+glimpse(d3)
+```
+## *next check for missing values*
+```{r}
+#Check per each column
+colSums(is.na(d3))
+```
+
+
+## *Have a summary of all*
+```{r}
+summary(d3)
+```
+
+## *Remove Some things*
+since this is a merge from portugese and math course for students who do both they have final grade for the two 
+So we have to have common final grade
+I decided to add and divide by 2 to get the common final grade for a student
+```{r}
+d3<-d3%>%
+  mutate(G1=(G1.x +G1.y)/2,
+         G2 = ( G2.x  + G2.y  )/2,
+         G3 = ( G3.x + G3.y  )/2)
+```
+know i will drop the grades from both.
+```{r}
+dim(d3)
+```
+```{r}
+d3<-select(d3,-c(30:35))
+```
+
+```{r}
+str(d3)
+```
+
+```{r}
+d3[27:32]
+```
+
+
+## *now lets set text to be uniform*
+```{r}
+colnames(d3)<-gsub(".x","",colnames(d3))
+```
+```{r}
+```
+
+```{r}
+ncol(d3)
+colnames(d3)[2]<-"sex"
+```
+
+## *now check place them to same case*
+```{r}
+colnames(d3)<-tolower(colnames(d3))
+```
+
+```{r}
+library(GGally)
+colnames(d3)
+numeral<-d3%>%
+  select_if(is.factor)
+glimpse(numeral)
+
+  #cor()%>%
+  #corrplot::corrplot()
+```
+# ***EDA***
+## **Univariate**
+### *numerics*
+```{r}
+#par(mfrow=c(2,2))
+numeral_n<-d3%>%
+  select_if(is.numeric)
+glimpse(numeral_n)
+
+```
+```{r}
+for(i in 1:16) {
+hist(numeral_n[,i], main=names(numeral_n)[i],xlab =names(numeral_n)[i],col = "powder blue" )
+}
+```
+
+***From the above there are lots of conclusion you can make about high school students.***
+
+**age ranges from 15-20 though there is these student with 22**
+
+**Most parents for these kids are educated** 
+
+**For absentinsm there seem to a student who has been absent for 60 days do abnormal.**
+**As you can also see these students some of them take alcoholo weekdays but more on weekends.**
+
+### *For factors*
+```{r}
+
+for(i in 1:16) {
+counts <- table(numeral[,i])
+name <- names(numeral)[i]
+barplot(counts, main=name,col = "red")
+
+}
+```
+
+## **Multivariate Analysis**
+
+**Check for multicollinearlity**
+```{r}
+x=numeral_n[,1:15]
+y=numeral_n[,16]
+
+numeral_n%>%
+  gather(-g3,key = "var",value = "value")%>%
+  ggplot(aes(x = value,y =g3 ))+
+  facet_wrap(~var,scales = "free")+
+  geom_jitter()+
+  geom_smooth(method = "lm")
+```
+
+***I realised the data is given in a nominal form ***
+
+**Even so i didn't change them factors**
+
+**I also realised the grades for g1,g2,g3 are very strongly correlated**
+
+**absentism can obviuosy be a reason for failure**
+
+**Also the more the failing the lower the grade**
+
+**Alcohol consumption can greatly influence the final grade**
+
+
+```{r}
+
+# This sets plot images to a nice size.
+options(repr.plot.width = 4, repr.plot.height = 4)
+ggplot(d3,aes(x=g3,y =absences))+
+  geom_col(fill = "blue")+
+  facet_wrap(~internet+address)+
+  theme_classic()
+
+
+```
+***From the plot above:**
+
+**Most students perfomance is influenced with whether the internet is available**
+
+**Most students live in the urban settlement these also influences there perfomance**
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+ggplot(d3,aes(x=g3,y =failures))+
+  geom_col(fill = "blue")+
+  facet_wrap(~higher)+
+  theme_classic()
+
+```
+
+**Those perfoming lower have no ambitions of going to higher learning**
+```{r}
+library(caret)
+set.seed(107)
+inTrain <- createDataPartition(
+  y = d3$g3,
+  ## the outcome data are needed
+  p = .75,
+  ## The percentage of data in the
+  ## training set
+  list = FALSE
+)
+training <- d3[ inTrain,]
+testing  <- d3[-inTrain,]
+
+```
+
+
+# **Modelling**
+
+## *Prepare the data for modelling/preprocessing*
+### *Dummyfy the data*
+
+```{r}
+training<-model.matrix(~.,data = training)
+```
+```{r}
+
+testing  <- model.matrix(~.,data = testing)
+```
+
+### *Scale the data*
+
+```{r}
+library(caret)
+library(gbm)
+# load data
+d3_t<-preProcess(training,method = "YeoJohnson")
+training<-as.data.frame(predict(d3_t,newdata = training))
+head(training)
+```
+
+
+## *split the data into train and test then train*
+```{r}
+trainControl <- trainControl(method="repeatedcv", number=5)
+set.seed(7)
+#usage of caret package and caret available model
+fit <- train(g3~g1+g2+absences+failures+studytime+famrel+dalc+activitiesyes+	traveltime+famsupyes, data=training, method="gbm", metric="RMSE", trControl=trainControl)
+
+```
+
+### *check the tuning*
+
+```{r}
+fit$finalModel$tuneValue
+fit$modelInfo$parameters
+fit$results
+```
+```{r}
+
+fit$bestTune
+```
+
+## *Predict the future data/testing data*
+```{r}
+testing$pred<-predict(fit,testing)
+head(testing$pred)
+
+```
+
+### *check for variample importance*
+```{r}
+library(caret)
+summary(fit)
+```
+
+## *Conclusion*
+
+1.The second grade is the most important factor that would determine a student's final.
+2.Absentism is a factor also the students who are mostly absent are the likely ones to fail in their final grade.
+3.A factor like how students use their time also can be a concern in perfomance.
+
+### *Recommendations*
+Students should work on every exam and perfom well so that it can influence their final grade.Teachers should know what makes their students be absent and help them.
+They should also advise them on time management.Also parents should be concerned on their children perfomance.For example they should organize good transport so that the travel time should be little.
+

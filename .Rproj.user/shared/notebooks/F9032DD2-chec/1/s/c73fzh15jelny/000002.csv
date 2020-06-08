@@ -1,0 +1,1 @@
+"0","colnames(d3)<-gsub("".x"","""",colnames(d3))"
