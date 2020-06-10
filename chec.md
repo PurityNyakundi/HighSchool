@@ -1497,7 +1497,7 @@ head(testing$pred)
 
     ## [1] 13.586503 11.326598 14.978721 10.921632 12.115943  7.757402
 
-### *check for variample importance*
+### *check for variable importance*
 
 ``` r
 library(caret)
